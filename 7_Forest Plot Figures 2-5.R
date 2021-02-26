@@ -1,9 +1,9 @@
 #forest plot
 library(wesanderson)
 library(brms)
-library(rethinking) #devtools::install_github("rmcelreath/rethinking")
-#library(bayesplot)
-#library(performance)
+library(rethinking) 
+#If rethinking is missing, install with the following:
+#devtools::install_github("rmcelreath/rethinking")
 
 load("mainmodels.Rdata")
 
@@ -66,7 +66,42 @@ forplot<-function(posts,col,colm,xlim=c(-1,1),labs=NA){
   abline(v=0)
 }
 
-tiff("Forest Plot covariates.R2.tiff", compression="lzw", height=10, width=16, units="cm", res=600, pointsize=7)
+tiff("Figure 2 Forest Plot.tiff", compression="lzw", height=10, width=11, units="cm", res=600, pointsize=7)
+
+layout(matrix(c(0,10,11,12, 0,1,2,3, 0,4,5,6, 0,13,13,13, 0,7,8,9, 0,14,14,14),byrow=TRUE,ncol=4),widths=c(0.7,1,1,1),heights=c(0.8,6,6,0.5,4,0.5))
+par(mar=c(2,1,1,1))
+lab1<-c("Depression","Conflicts","Fewer Labor Partners","Non-social Problems","Cortisol")
+lab2<-c("Body Mass Index","Systolic BP","Diastolic BP","Worse Self-Rated Health","Total Morbidity")
+lab3<-c("Infection","Respiratory","Gastrointestinal")
+forplot(sum1,wes_palettes$Royal2[1],3,c(-0.36,0.3),lab1)
+forplot(sum1,wes_palettes$Royal2[1],5,c(-1.2,1))
+forplot(sum1,wes_palettes$Royal2[1],1,c(-0.36,0.3))
+
+forplot(sum2,wes_palettes$Royal2[3],3,c(-0.36,0.3),lab2)
+forplot(sum2,wes_palettes$Royal2[3],5,c(-1.2,1))
+forplot(sum2,wes_palettes$Royal2[3],1,c(-0.36,0.3))
+
+forplot(sum3,wes_palettes$Royal2[5],3,c(-0.6,0.5),lab3)
+forplot(sum3,wes_palettes$Royal2[5],5,c(-2.4,2))
+forplot(sum3,wes_palettes$Royal2[5],1,c(-1.8,1.5))
+
+par(mar=c(0,0,0,0))
+frame()
+text(0.5,0.5,"Relative Household Wealth [Z]",adj=c(0.5,0.5),cex=1)
+frame()
+text(0.5,0.5,"Mean Community Wealth [Z]",adj=c(0.5,0.5),cex=1)
+frame()
+text(0.5,0.5,"Inequality [Gini Index Z]",adj=c(0.5,0.5),cex=1)
+
+frame()
+text(0.5,0.5,"Standardized Parameter [sd/sd]",adj=c(0.5,0.75),cex=1)
+frame()
+text(0.5,0.5,"Logistic Parameter [log odds/sd]",adj=c(0.5,0.75),cex=1)
+
+dev.off()
+
+
+tiff("Figure 4 Forest Plot covariates.tiff", compression="lzw", height=10, width=16, units="cm", res=600, pointsize=7)
 
 layout(matrix(c(0,16,17,18,19,20, 0,1,2,3,4,5, 0,6,7,8,9,10, 0,21,21,21,21,21, 0,11,12,13,14,15, 0,22,22,22,22,22),byrow=TRUE,ncol=6),widths=c(0.7,1,1,1,1,1),heights=c(0.8,6,6,0.5,4,0.5))
 par(mar=c(2,1,1,1))
@@ -110,6 +145,7 @@ text(0.5,0.5,"Logistic Parameter [log odds/sd]",adj=c(0.5,0.75),cex=1)
 
 dev.off()
 
+
 #Kids
 
 load("mainmodelsKids.Rdata")
@@ -124,7 +160,38 @@ sum3<-list(
   gastro.PP<-getPP(gastro))
 
 
-tiff("Forest Plot Kids Covariates.R2.tiff", compression="lzw", height=6, width=11, units="cm", res=600, pointsize=7)
+tiff("Figure 3 Forest Plot Kids.tiff", compression="lzw", height=6, width=11, units="cm", res=600, pointsize=7)
+
+layout(matrix(c(0,7,8,9, 0,1,2,3, 0,10,10,10, 0,4,5,6, 0,11,11,11),byrow=TRUE,ncol=4),widths=c(0.7,1,1,1),heights=c(0.8,3,0.5,4,0.5))
+par(mar=c(2,1,1,1))
+lab2<-c("Body Mass Index","Total Morbidity")
+lab3<-c("Infection","Respiratory","Gastrointestinal")
+
+forplot(sum2,wes_palettes$Royal2[3],3,c(-0.36,0.3),lab2)
+forplot(sum2,wes_palettes$Royal2[3],5,c(-1.2,1))
+forplot(sum2,wes_palettes$Royal2[3],1,c(-0.36,0.3))
+
+forplot(sum3,wes_palettes$Royal2[5],3,c(-0.6,0.5),lab3)
+forplot(sum3,wes_palettes$Royal2[5],5,c(-2.4,2))
+forplot(sum3,wes_palettes$Royal2[5],1,c(-1.8,1.5))
+
+par(mar=c(0,0,0,0))
+frame()
+text(0.5,0.5,"Relative Household Wealth [Z]",adj=c(0.5,0.5),cex=1)
+frame()
+text(0.5,0.5,"Mean Community Wealth [Z]",adj=c(0.5,0.5),cex=1)
+frame()
+text(0.5,0.5,"Inequality [Gini Index Z]",adj=c(0.5,0.5),cex=1)
+
+frame()
+text(0.5,0.5,"Standardized Parameter [sd/sd]",adj=c(0.5,0.75),cex=1)
+frame()
+text(0.5,0.5,"Logistic Parameter [log odds/sd]",adj=c(0.5,0.75),cex=1)
+
+dev.off()
+
+
+tiff("Figure 5 Forest Plot Kids Covariates.tiff", compression="lzw", height=6, width=11, units="cm", res=600, pointsize=7)
 
 layout(matrix(c(0,11,12,13,14,15, 0,1,2,3,4,5, 0,16,16,16,16,16, 0,6,7,8,9,10, 0,17,17,17,17,17),byrow=TRUE,ncol=6),widths=c(0.7,1,1,1,1,1),heights=c(0.8,3,0.5,4,0.5))
 par(mar=c(2,1,1,1))

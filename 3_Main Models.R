@@ -1,10 +1,8 @@
-library(brms)
-#setwd("//files.iem.uzh.ch/Data/Institute/Human_Ecology/ajaegg/Private/My Documents/Inequality and Health/Code")
-# 
-# #memory.limit(size=50000)
+#Main models for the paper, using village centered wealth and village mean wealth
 
+library(brms)
 # stan settings
-rstan_options(auto_write = TRUE)
+rstan::rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 
 alldata<-read.csv("alldataAdults.csv")

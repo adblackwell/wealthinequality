@@ -1,7 +1,9 @@
+#Main models with no covariates
+
 library(brms)
 
 # stan settings
-rstan_options(auto_write = TRUE)
+rstan::rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 
 alldata<-read.csv("alldataAdults.csv")

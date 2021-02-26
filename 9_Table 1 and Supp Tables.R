@@ -3,6 +3,7 @@ library(brms)
 library(rethinking) 
 library(flextable)
 library(officer)
+#If rethinking is missing
 #devtools::install_github("rmcelreath/rethinking")
 
 #### Tables ####
@@ -15,8 +16,6 @@ alldatakids$inds<-rowSums(!is.na(alldatakids[,c("AgeZ","SizeZ","male","Total.val
 #overall descriptive
 alldatakids<-alldatakids[alldatakids$depends>0 & alldatakids$inds==10,]
 alldatakids3<-aggregate(alldatakids[,c("BMI","sum.diag","InfectiousDiag","RepiratoryDiag","GIDiag","Age","male","AgeCorWealth","ComunSize", "route.distance.SB","MeanWealth.AgeCor","Gini.AgeCor")],by=list(pid=alldatakids$pid),FUN=mean,na.rm=TRUE)
-
-
 
 alldataadults<-read.csv("alldataAdults.csv")
 alldataadults$depends<-rowSums(!is.na(alldataadults[,c("DepressionScore","Conflicts","LaborPartners","OtherProblems","CSG","BMI","sysBP","diasBP","SaludGeneral","sum.diag","InfectiousDiag","RepiratoryDiag","GIDiag")]))
@@ -89,7 +88,7 @@ ft<-add_footer_lines(ft,values=c("a Reverse coded in analyses to make higher val
 ft<-font(ft,fontname="Calibri",part="all")
 ft<-fontsize(ft, part="all", size=10)
 
-save_as_docx("Table 1" = ft, path = "Table 1 V2.docx")
+save_as_docx("Table 1" = ft, path = "Table 1.docx")
 
 #village data
 hhdata$PercentSampled<-(hhdata$HHCnt/hhdata$ComunSize)*100
@@ -131,7 +130,7 @@ modeltable<-function(models,heads=c("Relative Wealth","Absolute Wealth","No Cova
   summs2<-summs2[,!(names(summs2) %in% c("N.x","N.y","N"))]
   ft2<-flextable(summs2)
   ft2<-autofit(ft2)
-  ft2<-set_header_labels(ft2,values=list(Variable=paste0("N=",N,"\nVariable"), V1.x="Mean",X.0.95.x="Lower\n5% CI",X0.95..x="Upper\n95%CI",V1.y="Mean",X.0.95.y="Lower\n95% CI",X0.95..y="Upper\n95%CI",V1="Mean",X.0.95="Lower 95%\nCI",X0.95.="Upper\n95%CI"))
+  ft2<-set_header_labels(ft2,values=list(Variable=paste0("N=",N,"\nVariable"), V1.x="Mean",X.0.95.x="Lower\n95% CI",X0.95..x="Upper\n95%CI",V1.y="Mean",X.0.95.y="Lower\n95% CI",X0.95..y="Upper\n95%CI",V1="Mean",X.0.95="Lower 95%\nCI",X0.95.="Upper\n95%CI"))
   ft2<-colformat_num(ft2,digits=2) 
   ft2<-vline(ft2,j=c(4,7), border = fp_border(color="gray"))
   ft2<-add_header_row(ft2,values=c("",heads),colwidths=c(1,rep(3,length(heads))))

@@ -1,11 +1,10 @@
+#Main models, using wealth relative to all Tsimane, no mean wealth
+
 library(brms)
 library(rstan)
-#setwd("//files.iem.uzh.ch/Data/Institute/Human_Ecology/ajaegg/Private/My Documents/Inequality and Health/Code")
-# 
-# #memory.limit(size=50000)
 
 # stan settings
-rstan_options(auto_write = TRUE)
+rstan::rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 
 alldata<-read.csv("alldataAdults.csv")

@@ -2,6 +2,7 @@ library(brms)
 library(sjstats)
 library(flextable)
 library(officer)
+library(wesanderson)
 ### are wealth-health relationships mediated by psychosocial stress? ###
 ########################################################################
 load("mainmodels.Rdata")
@@ -86,7 +87,39 @@ Ginift<-MediationTable("GiniZ","Gini")
 Wealthft<-MediationTable("HHWealthZ.vil","Wealth")
 MeanWealthft<-MediationTable("MeanWealthZ","Mean Wealth")
 
-save_as_docx("Table S18: Mediation of Gini effects" = Ginift, "Table S19: Mediation of wealth effects" = Wealthft, "Table S20: Mediation of mean community wealth effects" = MeanWealthft, path = "Mediation tables.docx")
+save_as_docx("Table S18: Mediation of wealth effects" = Wealthft, "Table S19: Mediation of Gini effects" = Ginift, "Table S20: Mediation of mean community wealth effects" = MeanWealthft, path = "Mediation tables.docx")
+
+#Plots for talk
+MediationTableForPlot<-function(treat,treatname){
+  tab<-data.frame(effect=NA,value=NA,hdi.low=NA,hdi.high=NA,treat=NA,mediator=NA,dependent=NA,N=NA)
+  for(i in 1:40){
+    ms<-MedSummary(Medmodels[[i]],treat=treat,models$Mediators[i],0.9)
+    tab<-rbind(tab,ms)
+  }
+  tab<-na.omit(tab)
+}
+
+
+IndirectPlot<-function(OutP){
+  cols<-c(wes_palette("Cavalcanti1"),wes_palette("GrandBudapest1"))
+  p<-OutP$effect=="indirect"
+  plot(OutP$value[p],col=cols[as.numeric(as.factor(OutP$dependent[p]))],pch=(15:19)[as.numeric(as.factor(OutP$mediator[p]))],ylim=c(-0.1,0.1),ylab="Indirect Effect",xlab=NA,xaxt="n",main=OutP$treat[1])
+  for(i in 1:length(OutP$value[p])){
+    lines(c(i,i),c(OutP$hdi.low[p][i],OutP$hdi.high[p][i]),col=cols[as.numeric(as.factor(OutP$dependent[p])[i])])
+  }
+  abline(h=0)
+  abline(v=c(8.5,16.5,24.5,32.5))
+  text(c(1,9,17,25,33),rep(0.1,5),unique(OutP$mediator[p]),adj=c(0,1))
+}
+
+GiniP<-MediationTableForPlot("GiniZ","Gini")
+WealthP<-MediationTableForPlot("HHWealthZ.vil","Wealth")
+
+par(mfrow=c(2,1),mar=c(1,5,2,1))
+
+IndirectPlot(GiniP)
+IndirectPlot(WealthP)
+
 
 #bayesps for mediator
 bps<-Reduce(rbind,lapply(Medmodels, function(x) {

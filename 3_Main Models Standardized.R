@@ -1,15 +1,11 @@
-library(brms)
-#setwd("//files.iem.uzh.ch/Data/Institute/Human_Ecology/ajaegg/Private/My Documents/Inequality and Health/Code")
-# 
-# #memory.limit(size=50000)
+#For this file, HHWealthZ is replaced with standardized absolute wealth, keeping the skewed distribution
 
+library(brms)
 # stan settings
-rstan_options(auto_write = TRUE)
+rstan::rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 
 alldata<-read.csv("alldataAdults.csv")
-
-#For this file, HHWealthZ is replaced with standardized absolute wealth, keeping the skewed distribution
 alldata$HHWealthZ<- scale(alldata$AgeCorWealth)
 alldata$MeanWealthZ<- scale(alldata$MeanWealth.AgeCor)
 

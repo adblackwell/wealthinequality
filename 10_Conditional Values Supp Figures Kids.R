@@ -1,8 +1,6 @@
 library(wesanderson)
 library(brms)
 library(rethinking) #devtools::install_github("rmcelreath/rethinking")
-#library(bayesplot)
-#library(performance)
 
 load("mainmodelsKids.Rdata")
 #### Figures ####
@@ -38,7 +36,7 @@ getPP<-function(mod){
   gastro.PP<-getPP(gastro)
   
 ### relative wealth
-tiff("All effects kids.ADB.R2.tiff", compression="lzw", height=9, width=10, units="cm", res=600, pointsize=5)
+tiff("Figure 3.S1 All effects kids.tiff", compression="lzw", height=9, width=10, units="cm", res=600, pointsize=5)
   
   layout(matrix(c(0,1:6,rep(19,7),0,7:12,rep(20,7),0,13:18,rep(21,7)),byrow=TRUE,ncol=7),widths=c(0.3,1,1,0.3,1,1,1),heights=c(1,0.2,1,0.2,1,0.2))
   par(mar=c(2,2,3,1))

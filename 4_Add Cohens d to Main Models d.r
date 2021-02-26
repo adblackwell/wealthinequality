@@ -1,8 +1,6 @@
 library(brms)
 library(rethinking)
 
-setwd("//files.iem.uzh.ch/Data/Institute/Human_Ecology/ajaegg/Private/My Documents/Inequality and Health/Code/Clean Code and Data")
-
 ## load models
 load("mainmodels.Rdata")
 

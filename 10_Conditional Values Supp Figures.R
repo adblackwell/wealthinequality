@@ -1,8 +1,6 @@
 library(wesanderson)
 library(brms)
 library(rethinking) #devtools::install_github("rmcelreath/rethinking")
-#library(bayesplot)
-#library(performance)
 
 load("mainmodels.Rdata")
 #### Figures ####
@@ -52,7 +50,7 @@ getPP<-function(mod){
   gastro.PP<-getPP(gastro)
   
 ### relative wealth
-tiff("All wealth effects no interactions.ADB.R2.tiff", compression="lzw", height=9, width=10, units="cm", res=600, pointsize=5)
+tiff("Figure 2.S1 Wealth effects.tiff", compression="lzw", height=9, width=10, units="cm", res=600, pointsize=5)
   par(mfrow=c(3,5), oma=c(3,3,0,0), mar=c(2,2,3,1))
   plot(estimate__~HHWealthZ.vil, m.dep[[3]], type="l", ylim=c(-0.75,0.75), xlim=c(-3,3), main="Depression", col=wes_palettes$Royal2[1], lwd=2, ylab="", xlab="")
   polygon(c(m.dep[[3]]$HHWealthZ.vil, rev(m.dep[[3]]$HHWealthZ.vil)), c(smooth(m.dep[[3]]$lower__), rev(smooth(m.dep[[3]]$upper__))), col=adjustcolor(wes_palettes$Royal2[1], alpha.f=0.5), border=NA)
@@ -108,7 +106,7 @@ tiff("All wealth effects no interactions.ADB.R2.tiff", compression="lzw", height
 
 ### inequality
 
-  tiff("All gini effects no interactions.ADB.R2.tiff", compression="lzw", height=9, width=10, units="cm", res=600, pointsize=5)
+  tiff("Figure 2.S3 gini effects.tiff", compression="lzw", height=9, width=10, units="cm", res=600, pointsize=5)
   par(mfrow=c(3,5), oma=c(3,3,0,0), mar=c(2,2,3,1))
   plot(estimate__~GiniZ, m.dep[[1]], type="l", ylim=c(-0.75,0.75), xlim=c(-2.5,2.5), main="Depression", col=wes_palettes$Royal2[1], lwd=2, ylab="", xlab="")
   polygon(c(m.dep[[1]]$GiniZ, rev(m.dep[[1]]$GiniZ)), c(smooth(m.dep[[1]]$lower__), rev(smooth(m.dep[[1]]$upper__))), col=adjustcolor(wes_palettes$Royal2[1], alpha.f=0.5), border=NA)
@@ -161,7 +159,7 @@ tiff("All wealth effects no interactions.ADB.R2.tiff", compression="lzw", height
   dev.off()
 
 ##Community wealth
-  tiff("All mean community wealth effects no interactions.ADB.R2.tiff", compression="lzw", height=9, width=10, units="cm", res=600, pointsize=5)
+  tiff("Figure 2.S2 mean community wealth effects.tiff", compression="lzw", height=9, width=10, units="cm", res=600, pointsize=5)
   par(mfrow=c(3,5), oma=c(3,3,0,0), mar=c(2,2,3,1))
   plot(estimate__~MeanWealthZ, m.dep[[5]], type="l", ylim=c(-0.75,0.75), xlim=c(-1,1), main="Depression", col=wes_palettes$Royal2[1], lwd=2, ylab="", xlab="")
   polygon(c(m.dep[[5]]$MeanWealthZ, rev(m.dep[[5]]$MeanWealthZ)), c(smooth(m.dep[[5]]$lower__), rev(smooth(m.dep[[5]]$upper__))), col=adjustcolor(wes_palettes$Royal2[1], alpha.f=0.5), border=NA)

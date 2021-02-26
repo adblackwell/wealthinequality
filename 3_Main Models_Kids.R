@@ -1,10 +1,8 @@
-library(brms)
-#setwd("//files.iem.uzh.ch/Data/Institute/Human_Ecology/ajaegg/Private/My Documents/Inequality and Health/Code")
-# 
-# #memory.limit(size=50000)
+#Main models run for juveniles
 
+library(brms)
 # stan settings
-rstan_options(auto_write = TRUE)
+rstan::rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 
 
